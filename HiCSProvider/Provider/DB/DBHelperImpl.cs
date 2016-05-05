@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 
 using HiCSSQL;
 using HiCSDB;
@@ -36,6 +37,11 @@ namespace HiCSProvider.DB.Impl
             {
                 SqlInfo sql = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
                 {
+                    if (mp == null)
+                    {
+                        Debug.Assert(false, string.Format("sql(id:{0}) need paramers,but not give", id));
+                    }
+
                     objVal = mp[propertyName];
                     return objVal != null;
                 });
@@ -72,6 +78,11 @@ namespace HiCSProvider.DB.Impl
             return OnIntTry(()=>{
                 SqlInfo sql = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
                 {
+                    if (mp == null)
+                    {
+                        Debug.Assert(false, string.Format("sql(id:{0}) need paramers,but not give", id));
+                    }
+
                     objVal = mp[propertyName];
                     return objVal != null;
                 });
@@ -91,6 +102,11 @@ namespace HiCSProvider.DB.Impl
             return OnIntTry(()=>{
                 SqlInfo info = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
                 {
+                    if (mp == null)
+                    {
+                        Debug.Assert(false, string.Format("sql(id:{0}) need paramers,but not give", id));
+                    }
+
                     objVal = mp[propertyName];
                     return objVal != null;
                 });
