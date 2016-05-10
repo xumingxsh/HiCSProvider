@@ -55,5 +55,16 @@ namespace HiCSProvider.DB.Impl
         /// <param name="sql"></param>
         /// <returns></returns>
         int ExecuteScalarInt8SQL(string sql);
+
+        /// <summary>
+        /// 查询分页数据,必须包含PageIndex和PageSize两个参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mp"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        PageData ExecutePageData(string id, int pageIndex, int pageSize, IDictionary<string, string> mp, params object[] args);
     }
 }

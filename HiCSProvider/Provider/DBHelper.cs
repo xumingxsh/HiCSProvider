@@ -69,7 +69,7 @@ namespace HiCSProvider
         /// <param name="mp"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static int ExecuteNoQuery(string id, IDictionary<string, string> mp, params object[] args)
+        public static int ExecuteNoQuery(string id, IDictionary<string, string> mp = null, params object[] args)
         {
             return Impl.ExecuteNoQuery(id, mp, args);
         }
@@ -92,6 +92,20 @@ namespace HiCSProvider
         public static int ExecuteScalarInt8SQL(string sql)
         {
             return Impl.ExecuteScalarInt8SQL(sql);
+        }
+
+        /// <summary>
+        /// 查询分页数据,必须包含PageIndex和PageSize两个参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mp"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+       public  PageData ExecutePageData(string id, int pageIndex, int pageSize, IDictionary<string, string> mp = null, params object[] args)
+        {
+            return Impl.ExecutePageData(id, pageIndex, pageSize, mp, args);
         }
     }
 }

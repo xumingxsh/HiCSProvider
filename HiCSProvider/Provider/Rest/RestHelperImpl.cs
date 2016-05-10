@@ -146,7 +146,19 @@ namespace HiCSProvider.DB.Impl
             string ret = RestHepler.RequestRest8GetOnID("Sql.ExecuteScalarInt", sql);
             return ToInt(ret);
         }
-
+        /// <summary>
+        /// 查询分页数据,必须包含PageIndex和PageSize两个参数
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mp"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public PageData ExecutePageData(string id, int pageIndex, int pageSize, IDictionary<string, string> mp, params object[] args)
+        {
+            throw new NotImplementedException("this function not support restful implement");
+        }
         private int ToInt(string ret)
         {
             if (string.IsNullOrWhiteSpace(ret))

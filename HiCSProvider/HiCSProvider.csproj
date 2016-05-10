@@ -56,6 +56,7 @@
     <Compile Include="Provider\DBHelper.cs" />
     <Compile Include="Provider\DB\DBHelperImpl.cs" />
     <Compile Include="Provider\Interface\IProviderHelper.cs" />
+    <Compile Include="Provider\PageData.cs" />
     <Compile Include="Provider\Rest\RestHelperImpl.cs" />
     <Compile Include="Provider\Rest\RestHepler.cs" />
     <Compile Include="Provider\ProvidConfig.cs" />
