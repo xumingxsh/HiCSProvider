@@ -30,7 +30,10 @@ namespace HiCSProvider
             set
             {
                 xmlFolder = value;
-
+                HiCSSQL.HiLog.SetLogFun((script) =>
+                {
+                    HiCSUtil.HiLog.Error(script);
+                });
                 SQLProxy.LoadXMLs(xmlFolder);
             }
         }

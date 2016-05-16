@@ -36,7 +36,7 @@ namespace HiCSProvider.DB.Impl
         {
             return OnDTTry(() =>
             {
-                SqlInfo sql = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
+                SqlInfo sql = SQLHelper.GetSqlInfo(id, (string propertyName, ref object objVal) =>
                 {
                     if (mp == null)
                     {
@@ -61,7 +61,7 @@ namespace HiCSProvider.DB.Impl
         {
             return OnDTTry(() =>
             {
-                SqlInfo info = SQLProxy.GetSqlInfo(id);
+                SqlInfo info = SQLHelper.GetSqlInfo(id);
                 string sql = string.Format(info.SQL, args);
                 DataTable dt = DB.ExecuteDataTable(sql);
                 return ExcelDataTable(dt);
@@ -219,7 +219,7 @@ namespace HiCSProvider.DB.Impl
 
         private static SqlInfo GetSQLInfo(string id, IDictionary<string, string> mp = null)
         {
-            SqlInfo info = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
+            SqlInfo info = SQLHelper.GetSqlInfo(id, (string propertyName, ref object objVal) =>
             {
                 if (mp == null)
                 {
@@ -245,7 +245,7 @@ namespace HiCSProvider.DB.Impl
         {
             bool hasIndex = false;
             bool hasSize = false;
-            SqlInfo info = SQLProxy.GetSqlInfo(id, (string propertyName, ref object objVal) =>
+            SqlInfo info = SQLHelper.GetSqlInfo(id, (string propertyName, ref object objVal) =>
             {
                 if (mp == null)
                 {
