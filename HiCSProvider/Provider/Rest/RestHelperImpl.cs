@@ -12,43 +12,9 @@ namespace HiCSProvider.DB.Impl
         /// <param name="id"></param>
         /// <param name="mp"></param>
         /// <returns></returns>
-        public DataTable ExecuteQuery(string id, IDictionary<string, string> mp = null)
+        public DataTable ExecuteQuery(string id, IDictionary<string, string> mp, params object[] args)
         {
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            if (mp != null)
-            {
-                foreach(string key in mp.Keys)
-                {
-                    if (!parms.ContainsKey(key))
-                    {
-                        parms.Add(key, mp[key]);
-                    }
-                }
-            }
-
-            parms["sql_id"] = id;
-            string json = HiCSUtil.Json.Obj2Json(parms);
-            string ret = RestHepler.RequestOnJson("ExecuteQuery8ID", json);
-            return Ret2DataTable(ret);
-        }
-
-        /// <summary>
-        /// 执行查询
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public DataTable ExecuteQuery(string id, params object[] args)
-        {
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            parms["sql_id"] = id;
-
-            if (args.Length > 0)
-            {
-                parms["parms"] = RestHepler.GetParam(args);
-            }
-
-            string json = HiCSUtil.Json.Obj2Json(parms);
+            string json = RestHepler.GetRquestParams(id, mp, args);
             string ret = RestHepler.RequestOnJson("ExecuteQuery8ID", json);
             return Ret2DataTable(ret);
         }
@@ -58,73 +24,20 @@ namespace HiCSProvider.DB.Impl
         /// </summary>
         /// <param name="id"></param>
         /// <param name="mp"></param>
-        /// <returns></returns>
-        public int ExecuteNoQuery(string id, params object[] args)
-        {
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            parms["sql_id"] = id;
-
-            if (args.Length > 0)
-            {
-                parms["parms"] = RestHepler.GetParam(args);
-            }
-
-            string json = HiCSUtil.Json.Obj2Json(parms);
-            string ret = RestHepler.RequestOnJson("ExecuteNoQuery8ID", json);
-            return ToInt(ret);
-        }
-
-        public int ExecuteNoQuery(string id, IDictionary<string, string> mp)
-        {
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            if (mp != null)
-            {
-                foreach (string key in mp.Keys)
-                {
-                    if (!parms.ContainsKey(key))
-                    {
-                        parms.Add(key, mp[key]);
-                    }
-                }
-            }
-
-            parms["sql_id"] = id;
-            string json = HiCSUtil.Json.Obj2Json(parms);
-            string ret = RestHepler.RequestOnJson("ExecuteNoQuery8ID", json);
-            return ToInt(ret);
-        }
-
-        /// <summary>
-        /// 执行非查询语句
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="mp"></param>
-        /// <param name="args"></param>
         /// <returns></returns>
         public int ExecuteNoQuery(string id, IDictionary<string, string> mp, params object[] args)
         {
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            if (mp != null)
-            {
-                foreach (string key in mp.Keys)
-                {
-                    if (!parms.ContainsKey(key))
-                    {
-                        parms.Add(key, mp[key]);
-                    }
-                }
-            }
-            if (args.Length > 0)
-            {
-                parms["parms"] = RestHepler.GetParam(args);
-            }
-
-            parms["sql_id"] = id;
-            string json = HiCSUtil.Json.Obj2Json(parms);
+            string json = RestHepler.GetRquestParams(id, mp, args);
             string ret = RestHepler.RequestOnJson("ExecuteNoQuery8ID", json);
             return ToInt(ret);
         }
 
+        public string ExecuteScalar(string id, IDictionary<string, string> mp, params object[] args)
+        {
+            string json = RestHepler.GetRquestParams(id, mp, args);
+            return RestHepler.RequestOnJson("ExecuteScalar8ID", json);
+        }
+        
         /// <summary>
         /// 执行非查询SQL语句
         /// </summary>
@@ -146,19 +59,7 @@ namespace HiCSProvider.DB.Impl
             string ret = RestHepler.RequestRest8GetOnID("Sql.ExecuteScalarInt", sql);
             return ToInt(ret);
         }
-        /// <summary>
-        /// 查询分页数据,必须包含PageIndex和PageSize两个参数
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="mp"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public PageData ExecutePageData(string id, int pageIndex, int pageSize, IDictionary<string, string> mp, params object[] args)
-        {
-            throw new NotImplementedException("this function not support restful implement");
-        }
+
         private int ToInt(string ret)
         {
             if (string.IsNullOrWhiteSpace(ret))

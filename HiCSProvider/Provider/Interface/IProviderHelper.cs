@@ -15,32 +15,24 @@ namespace HiCSProvider.DB.Impl
         /// <param name="id"></param>
         /// <param name="mp"></param>
         /// <returns></returns>
-        DataTable ExecuteQuery(string id, IDictionary<string, string> mp = null);
-
-        /// <summary>
-        /// 执行查询
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        DataTable ExecuteQuery(string id, params object[] args);
+        DataTable ExecuteQuery(string id, IDictionary<string, string> mp, params object[] args);
 
         /// <summary>
         /// 执行非查询语句
         /// </summary>
         /// <param name="id"></param>
         /// <param name="mp"></param>
-        /// <returns></returns>
-        int ExecuteNoQuery(string id, IDictionary<string, string> mp = null);
-
-        /// <summary>
-        /// 执行非查询语句
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="mp"></param>
-        /// <param name="args"></param>
         /// <returns></returns>
         int ExecuteNoQuery(string id, IDictionary<string, string> mp, params object[] args);
+
+        /// <summary>
+        /// 返回第一行第一列
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="mp"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        string ExecuteScalar(string id, IDictionary<string, string> mp, params object[] args);
 
         /// <summary>
         /// 执行非查询SQL语句
@@ -55,16 +47,5 @@ namespace HiCSProvider.DB.Impl
         /// <param name="sql"></param>
         /// <returns></returns>
         int ExecuteScalarInt8SQL(string sql);
-
-        /// <summary>
-        /// 查询分页数据,必须包含PageIndex和PageSize两个参数
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="mp"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        PageData ExecutePageData(string id, int pageIndex, int pageSize, IDictionary<string, string> mp, params object[] args);
     }
 }

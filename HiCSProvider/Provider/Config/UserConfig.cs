@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HiCSSQL;
+using System;
 
 namespace HiCSProvider
 {
@@ -19,11 +20,25 @@ namespace HiCSProvider
             ProvidConfig.Conn = conn;
             ProvidConfig.XMLFolder = xmlFolder;
             ProvidConfig.DBType = dbType;
+
+            try
+            {
+                SQLProxy.LoadXMLs(xmlFolder);
+            }
+            catch
+            {
+
+            }
         }
 
         public static void SetUri(string uri)
         {
             HiCSProvider.DB.Impl.RestHepler.RemoteURI = uri;
+        }
+
+        public static void SetWebUri(string uri)
+        {
+            HiCSProvider.DB.Impl.WebProvideImpl.WebUri = uri;
         }
     }
 }

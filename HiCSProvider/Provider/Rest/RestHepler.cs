@@ -17,6 +17,31 @@ namespace HiCSProvider.DB.Impl
             string uri = RemoteURI + "/api/Sql/" + action + "/" + parm;
             return RequestRest8Get(uri);
         }
+
+        public static string GetRquestParams(string id, IDictionary<string, string> mp, params object[] args)
+        {
+            Dictionary<string, string> parms = new Dictionary<string, string>();
+            if (mp != null)
+            {
+                foreach (string key in mp.Keys)
+                {
+                    if (!parms.ContainsKey(key))
+                    {
+                        parms.Add(key, mp[key]);
+                    }
+                }
+            }
+
+            if (args.Length > 0)
+            {
+                parms["parms"] = RestHepler.GetParam(args);
+            }
+
+            parms["sql_id"] = id;
+            return  HiCSUtil.Json.Obj2Json(parms);
+
+        }
+
         public static string RequestRest8PostOnID(string id, IDictionary<string, string> mp = null)
         {
             string uri = GetUri(id);
@@ -81,6 +106,7 @@ namespace HiCSProvider.DB.Impl
                 }
             }  
         }
+
         public static string RequestRest8GetOnID(string id, params object[] args)
         {
             string uri = GetUri(id, args);

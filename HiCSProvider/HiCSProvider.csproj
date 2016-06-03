@@ -11,6 +11,7 @@
     <AssemblyName>HiCSProvider</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,35 +21,44 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HiCSDB">
+    <Reference Include="HiCSDB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HiCSDB.dll</HintPath>
     </Reference>
-    <Reference Include="HiCSSQL">
+    <Reference Include="HiCSSQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HiCSSQL.dll</HintPath>
     </Reference>
-    <Reference Include="HiCSUtil">
+    <Reference Include="HiCSUtil, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\HiCSUtil.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\IRemoteProvide.cs" />
+    <Compile Include="Interface\ParamsHelper.cs" />
     <Compile Include="Provider\DBHelper.cs" />
     <Compile Include="Provider\DB\DBHelperImpl.cs" />
     <Compile Include="Provider\DB\Proxy\SQLHelper.cs" />
@@ -57,13 +67,22 @@
     <Compile Include="Provider\PageData.cs" />
     <Compile Include="Provider\Rest\RestHelperImpl.cs" />
     <Compile Include="Provider\Rest\RestHepler.cs" />
-    <Compile Include="Provider\ProvidConfig.cs" />
-    <Compile Include="Provider\UserConfig.cs" />
+    <Compile Include="Provider\Config\ProvidConfig.cs" />
+    <Compile Include="Provider\Config\UserConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\WebService\WebProvideImpl.cs" />
     <Compile Include="Test\UnitTest_RestImpl.cs" />
+    <Compile Include="Web References\WService\Reference.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web References\WService\CommonProvide.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\WService\CommonProvide.wsdl" />
+    <None Include="Web References\WService\Reference.map" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,7 +16,6 @@ namespace HiCSProvider.Test
         {
             RestHepler.RemoteURI = "http://localhost:49653";
         }
-
         
         [TestMethod]
         public void RestImpl_LoginP2()
@@ -38,4 +37,3 @@ namespace HiCSProvider.Test
         }
     }
 }
-

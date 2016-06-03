@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 using HiCSSQL;
 
@@ -31,6 +32,29 @@ namespace HiCSProvider.DB.Impl
         /// <param name="propertyName">属性名称</param>
         /// <returns>true:属性存在；false:属性不存在</returns>
         public delegate bool OnGetObjectHandler(string propertyName, ref object objVal);
+
+        /// <summary>
+        ///  根据主键取得SQL的相关信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="mp"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static SqlInfo GetSqlInfo(string id, IDictionary<string, string> mp, params object[] args)
+        {
+            SqlInfo sql = GetSqlInfo(id, (string propertyName, ref object objVal) =>
+            {
+                if (mp == null)
+                {
+                    Debug.Assert(false, string.Format("sql(id:{0}) need paramers,but not give", id));
+                }
+
+                objVal = mp[propertyName];
+                return objVal != null;
+            });
+            sql.SQL = string.Format(sql.SQL, args);
+            return sql;
+        }
 
         /// <summary>
         /// 根据主键取得SQL的相关信息
@@ -104,7 +128,6 @@ namespace HiCSProvider.DB.Impl
             {
                 throw new Exception(string.Format("database type({0}) not support", type));
             }
-            return null;
         }
 
         private static DbParameter CreateParamer(string type, string key, object val, string isOutStr)
