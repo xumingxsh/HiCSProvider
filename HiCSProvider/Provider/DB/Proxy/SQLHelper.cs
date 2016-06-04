@@ -19,7 +19,7 @@ namespace HiCSProvider.DB.Impl
         /// </summary>
         /// <param name="dbType">数据库类型</param>
         /// <param name="createHandler">创建参数的函数</param>
-        public static void AddParamFun(string dbType, OnCreateParamHandler createHandler)
+        public static void AddParamFun(string dbType, Func<DbParameter> createHandler)
         {
             dbType = dbType.ToLower();
             handlers[dbType] = createHandler;
@@ -119,7 +119,7 @@ namespace HiCSProvider.DB.Impl
                 return new OleDbParameter();
             }
 
-            OnCreateParamHandler handler = null;
+            Func<DbParameter> handler = null;
             if (handlers.TryGetValue(type, out handler))
             {
                 return handler();
@@ -162,7 +162,6 @@ namespace HiCSProvider.DB.Impl
             return param;
         }
 
-        public delegate DbParameter OnCreateParamHandler();
-        static Dictionary<string, OnCreateParamHandler> handlers = new Dictionary<string, OnCreateParamHandler>();
+        static Dictionary<string, Func<DbParameter>> handlers = new Dictionary<string, Func<DbParameter>>();
     }
 }

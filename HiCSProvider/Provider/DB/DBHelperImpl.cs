@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
+
 using HiCSSQL;
 using HiCSDB;
+using HiCSUtil;
 
 namespace HiCSProvider.DB.Impl
 {
@@ -31,7 +32,7 @@ namespace HiCSProvider.DB.Impl
         /// <returns></returns>
         public DataTable ExecuteQuery(string id, IDictionary<string, string> mp, params object[] args)
         {
-            return OnDTTry(() =>
+            return TryHelper.OnTry(null, () =>
             {
                 SqlInfo sql = SQLHelper.GetSqlInfo(id, mp, args);
                 DataTable dt = DB.ExecuteDataTable(sql.SQL, sql.Parameters);
@@ -47,7 +48,8 @@ namespace HiCSProvider.DB.Impl
         /// <returns></returns>
         public int ExecuteNoQuery(string id, IDictionary<string, string> mp, params object[] args)
         {
-            return OnIntTry(()=>{
+            return TryHelper.OnTryEx(-1, () =>
+            {
                 SqlInfo sql = SQLHelper.GetSqlInfo(id, mp, args);
                 return DB.ExecuteNonQuery(sql.SQL, sql.Parameters);
             });
@@ -55,22 +57,11 @@ namespace HiCSProvider.DB.Impl
 
         public string ExecuteScalar(string id, IDictionary<string, string> mp, params object[] args)
         {
-            try
+            return TryHelper.OnTryEx("", () =>
             {
                 SqlInfo sql = SQLHelper.GetSqlInfo(id, mp, args);
-                object obj = DB.ExecuteScalar(sql.SQL, sql.Parameters);
-                if (obj == null || obj is DBNull)
-                {
-                    return "";
-                }
-                return Convert.ToString(obj);
-
-            }
-            catch(Exception ex)
-            {
-                HiCSUtil.HiLog.Error(ex.ToString());
-                return "";
-            }
+                return DB.ExecuteScalar(sql.SQL, sql.Parameters);
+            });
         }
         
         /// <summary>
@@ -80,7 +71,8 @@ namespace HiCSProvider.DB.Impl
         /// <returns></returns>
         public int ExecuteNoQuery8SQL(string sql)
         {
-            return OnIntTry(()=>{
+            return TryHelper.OnTryEx(-1, () =>
+            {
                 return DB.ExecuteNonQuery(sql);
             });
         }
@@ -92,43 +84,10 @@ namespace HiCSProvider.DB.Impl
         /// <returns></returns>
         public int ExecuteScalarInt8SQL(string sql)
         {
-            return OnIntTry(()=>{
-                object obj = DB.ExecuteScalar(sql);
-                if (obj is DBNull || obj == null)
-                {
-                    return -1;
-                }
-                return Convert.ToInt32(obj);
+            return TryHelper.OnTryEx(-1, () =>
+            {
+                return DB.ExecuteScalar(sql);
             });
-        }
-
-        delegate DataTable OnDTHandler();
-        private DataTable OnDTTry(OnDTHandler evt)
-        {
-            try
-            {
-                return evt();
-            }
-            catch(Exception ex)
-            {
-                //throw new Exception(ex.Message);
-                HiCSUtil.HiLog.Error(ex.ToString());
-                return null;
-            }
-        }
-
-        delegate int OnIntHandler();
-        private int OnIntTry(OnIntHandler evt)
-        {
-            try
-            {
-                return evt();
-            }
-            catch (Exception ex)
-            {
-                HiCSUtil.HiLog.Error(ex.ToString());
-                return -1;
-            }
         }
 
         private DataTable ExcelDataTable(DataTable dt)

@@ -9,7 +9,7 @@ namespace HiCSProvider.DB.Impl
     /// </summary>
     interface IProviderHelper
     {
-        /// <summary>
+        /// <summary>+----------------------
         /// 执行查询
         /// </summary>
         /// <param name="id"></param>
