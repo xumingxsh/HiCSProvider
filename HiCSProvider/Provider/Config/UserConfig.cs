@@ -1,6 +1,8 @@
 ﻿using HiCSSQL;
 using System;
 
+using HiCSDBProvider;
+
 namespace HiCSProvider
 {
     /// <summary>
@@ -17,17 +19,13 @@ namespace HiCSProvider
         /// <param name="xmlFolder">xml文件夹</param>
         public static void Init(int dbType, string conn, string xmlFolder)
         {
-            ProvidConfig.Conn = conn;
-            ProvidConfig.XMLFolder = xmlFolder;
-            ProvidConfig.DBType = dbType;
-
             try
             {
-                SQLProxy.LoadXMLs(xmlFolder);
+                DBProvider.Init(dbType, conn, xmlFolder);
             }
-            catch
+            catch(Exception ex)
             {
-
+                HiCSUtil.HiLog.Error(ex.ToString());
             }
         }
 

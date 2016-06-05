@@ -60,13 +60,10 @@
     <Compile Include="Interface\ParamsHelper.cs" />
     <Compile Include="Provider\DBHelper.cs" />
     <Compile Include="Provider\DB\DBHelperImpl.cs" />
-    <Compile Include="Provider\DB\Proxy\SQLHelper.cs" />
-    <Compile Include="Provider\DB\Proxy\SqlInfo.cs" />
     <Compile Include="Provider\Interface\IProviderHelper.cs" />
     <Compile Include="Provider\PageData.cs" />
     <Compile Include="Provider\Rest\RestHelperImpl.cs" />
     <Compile Include="Provider\Rest\RestHepler.cs" />
-    <Compile Include="Provider\Config\ProvidConfig.cs" />
     <Compile Include="Provider\Config\UserConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\WebService\WebProvideImpl.cs" />
@@ -82,6 +79,12 @@
   <ItemGroup>
     <None Include="Web References\WService\CommonProvide.wsdl" />
     <None Include="Web References\WService\Reference.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HiCSClient\HiCSDBProvider\HiCSDBProvider.csproj">
+      <Project>{d6551ef7-2b1e-4696-a4f4-1c0188a79b49}</Project>
+      <Name>HiCSDBProvider</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
