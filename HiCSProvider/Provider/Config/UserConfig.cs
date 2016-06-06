@@ -1,5 +1,4 @@
-﻿using HiCSSQL;
-using System;
+﻿using System;
 
 using HiCSDBProvider;
 

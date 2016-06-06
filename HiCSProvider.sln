@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiCSProvider", "HiCSProvider\HiCSProvider.csproj", "{43C2740D-83C2-4976-A2ED-0CAD161CFBAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiCSDBProvider", "HiCSDBProvider\HiCSDBProvider.csproj", "{D6551EF7-2B1E-4696-A4F4-1C0188A79B49}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{43C2740D-83C2-4976-A2ED-0CAD161CFBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43C2740D-83C2-4976-A2ED-0CAD161CFBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43C2740D-83C2-4976-A2ED-0CAD161CFBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6551EF7-2B1E-4696-A4F4-1C0188A79B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6551EF7-2B1E-4696-A4F4-1C0188A79B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6551EF7-2B1E-4696-A4F4-1C0188A79B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6551EF7-2B1E-4696-A4F4-1C0188A79B49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
