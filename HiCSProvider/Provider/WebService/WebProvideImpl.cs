@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 
 using HiCSProvider.WService;
+using HiCSUtil;
 
 namespace HiCSProvider.DB.Impl
 {
