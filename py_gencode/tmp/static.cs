@@ -15,6 +15,7 @@ namespace HiCSProvider.Demo
         /// <summary>
         /// main interface 
         /// </summary>
+        /// <returns></returns>
         public static ProviderImpl ProviderHelper
         {
             get

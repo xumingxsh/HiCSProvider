@@ -1,6 +1,7 @@
     
         /// <summary>
         /// #script# 
-        /// </summary>
+        /// </summary>#args#
+        /// <returns></returns>
         #returns# #name#(#paramers#);
 	

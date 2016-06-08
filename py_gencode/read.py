@@ -60,9 +60,18 @@ class FuncInfo:
 		self.paramers = ""
 		self.paramers_code = ""
 		self.operator = ""		
+		self.args = []
+	def SetArgs(self):
+		if self.paramers_code == "":
+			return
+		arr = self.paramers_code.split(',')
+		for i in arr:
+			text = i.rstrip()
+			self.args.append(text)
 	def Declar(self):
 		text = ReadTemplate("interface_fun.cs")
-		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).replace("#paramers#", self.paramers)	
+		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).\
+replace("#paramers#", self.paramers).replace("#args#", self.ArgComment())
 	def Impl(self):
 		text = ReadTemplate("class_fun.cs")
 		parm = self.paramers_code
@@ -70,7 +79,14 @@ class FuncInfo:
 			parm = " ," + parm            
 		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).\
 replace("#paramers#", self.paramers).replace("#operator#", self.operator).replace("#SQL_ID#", self.SQL_ID).\
-replace("#paramers_code#", parm)
+replace("#paramers_code#", parm).replace("#args#", self.ArgComment())
+	def ArgComment(self):
+		text = ""
+		for i in self.args:
+			text += "\r\n"
+			s = ReadTemplate("arg.cs")
+			text += s.replace("#arg#", i)
+		return text
 
 def read_val(val):
 	if isinstance(val, float):
@@ -92,6 +108,7 @@ for sheet in book.sheets():
 		func.paramers = read_val(sheet.row(i)[4].value) 
 		func.paramers_code = read_val(sheet.row(i)[5].value) 
 		func.operator = read_val(sheet.row(i)[6].value) 
+		func.SetArgs()
 		interface.functions.append(func)
 	interfaces[interface.name] = interface
     

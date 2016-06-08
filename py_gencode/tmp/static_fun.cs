@@ -1,7 +1,8 @@
 		
         /// <summary>
         /// #I_Name# access function
-        /// </summary>
+        /// </summary>        
+        /// <returns></returns>
         public static #I_Name# #I_Name#Provider
         {
             get
