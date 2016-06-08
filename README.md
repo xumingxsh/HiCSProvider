@@ -16,3 +16,4 @@
 2: 添加以webService作为数据源的支持
 3: 添加当以WebService作为数据源时,为每个SQL_ID单独提供实现的接口(IRemoteProvide)
 4: 将远程访问(WebService,Rest)时 ,参数的封装和解封装放置到HiCSUtil项目中
+5: 针对接口提供以在Excel中设计接口,通过python自动生成源代码的功能
