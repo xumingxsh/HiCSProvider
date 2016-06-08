@@ -51,6 +51,12 @@ class Interface:
 	def StaticFun(self):		
 		text = ReadTemplate("static_fun.cs")
 		return text.replace("#I_Name#", self.name)
+	def Impl(self):		
+		text = ReadTemplate("class_partial.cs")
+		funcs = ""
+		for i in self.functions:
+			funcs += i.Impl() 
+		return text.replace("#I_Name#", self.name).replace("#Func_List#", funcs)
 class FuncInfo:
 	def __init__(self):
 		self.script = ""
@@ -101,7 +107,7 @@ for sheet in book.sheets():
 	interface.name = sheet.name
 	for i in range(1, sheet.nrows):
 		func = FuncInfo()
-		func.script = read_val(sheet.row(i)[0].value) 
+		func.script = read_val(sheet.row(i)[0].value).replace("\r\n", " ").replace("\n", " ") 
 		func.name = read_val(sheet.row(i)[1].value) 
 		func.returns = read_val(sheet.row(i)[2].value) 
 		func.SQL_ID = read_val(sheet.row(i)[3].value) 
@@ -114,14 +120,12 @@ for sheet in book.sheets():
     
 def ImplFuncs():
 	text = ReadTemplate("class.cs")
-	funcs = ""
 	infs = ""
 	for i in interfaces.keys():
-		funcs += interfaces[i].ImplFuncs()   
 		if infs != "":
 			infs += ", " 
 		infs += i
-	return text.replace("#Func_List#", funcs).replace("#interfaces#", infs)
+	return text.replace("#interfaces#", infs)
 
 def StaticClass():
 	text = ReadTemplate("static.cs")
@@ -130,9 +134,29 @@ def StaticClass():
 		funcs += interfaces[i].StaticFun()   
 	return text.replace("#Func_List#", funcs)
 	
-print ImplFuncs()
+import shutil  
+def DelDir(path):
+	shutil.rmtree(path,True)  
+
+
+dir = os.path.join(local.decode('gbk').encode('utf8')+"/src/", "interface")
+DelDir(dir)
+dir = os.path.join(local.decode('gbk').encode('utf8')+"/src/", "impl")
+DelDir(dir)
+dir = os.path.join(local.decode('gbk').encode('utf8'), "src")
+DelDir(dir)
+os.makedirs(dir)
+dir = os.path.join(local.decode('gbk').encode('utf8')+"/src/", "interface")
+os.makedirs(dir)
+dir = os.path.join(local.decode('gbk').encode('utf8')+"/src/", "impl")
+os.makedirs(dir)
+
 for i in interfaces.keys():
 	#print interfaces[i].Declar()
-	export(interfaces[i].name + ".cs", interfaces[i].Declar(), interfaces[i].name + " success")
+	export("interface/" + interfaces[i].name + ".cs", interfaces[i].Declar(), interfaces[i].name + " success")
+	
+for i in interfaces.keys():
+	#print interfaces[i].Declar()
+	export("impl/Implements" + interfaces[i].name + ".cs", interfaces[i].Impl(), interfaces[i].name + " implement success")
 export("Implements.cs", ImplFuncs(), "Implements success")
 export("StaticHelper.cs", StaticClass(), "StaticHelper success")
