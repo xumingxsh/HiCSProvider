@@ -8,3 +8,11 @@
 3: 本程序不刻意追求ORM,如果需要ORM,则可以使用HiCSUtil中的CBO进行扩展
 4: 本程序未提供分页功能,因为我还没有考虑好(主要是针对SQL-Server)
 5: 本程序是从HiCSClient拆分出来的,因为本程序在任何一个项目中,接口都不会有太大变化,所以适合单独作为一个程序
+
+2016-06-08
+最近更新:
+1: 将数据库处理从HiCSProvider中移除,单独创建了一个项目HiCSDBProvide
+原因是: WebService,Rest等实现可能会用到数据库访问,HiCSProvider同时支持数据库,WebService,Rest作为数据源.
+2: 添加以webService作为数据源的支持
+3: 添加当以WebService作为数据源时,为每个SQL_ID单独提供实现的接口(IRemoteProvide)
+4: 将远程访问(WebService,Rest)时 ,参数的封装和解封装放置到HiCSUtil项目中
