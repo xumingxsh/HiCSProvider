@@ -1,0 +1,2 @@
+这是一个根据Excel中的接口设计,自动生成使用HiCSProvider代码的程序,使用Python2.7开发
+使用到了xlrd和py2exe
