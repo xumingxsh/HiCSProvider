@@ -52,7 +52,12 @@ namespace HiCSDBProvider.Impl
                 objVal = mp[propertyName];
                 return objVal != null;
             });
-            sql.SQL = string.Format(sql.SQL, args);
+
+            if (args != null)
+            {
+                sql.SQL = string.Format(sql.SQL, args);
+            }
+
             return sql;
         }
 
@@ -156,7 +161,7 @@ namespace HiCSDBProvider.Impl
             }
             else
             {
-                param.Direction = ParameterDirection.InputOutput;
+                param.Direction = ParameterDirection.Input;
             }
 
             return param;
