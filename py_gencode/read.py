@@ -72,13 +72,15 @@ class FuncInfo:
 			return
 		arr = self.paramers_code.split(',')
 		for i in arr:
-			text = i.rstrip()
+			text = i.strip()
 			self.args.append(text)
 	def Declar(self):
 		text = ReadTemplate("interface_fun.cs")
 		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).\
 replace("#paramers#", self.paramers).replace("#args#", self.ArgComment())
 	def Impl(self):
+		if self.paramers != "" and self.paramers_code == "":
+			return self.ImplProduce()
 		text = ReadTemplate("class_fun.cs")
 		parm = self.paramers_code
 		if len(parm) > 0:
@@ -86,6 +88,25 @@ replace("#paramers#", self.paramers).replace("#args#", self.ArgComment())
 		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).\
 replace("#paramers#", self.paramers).replace("#operator#", self.operator).replace("#SQL_ID#", self.SQL_ID).\
 replace("#paramers_code#", parm).replace("#args#", self.ArgComment())
+	def ImplProduce(self):
+		arr = self.paramers.split(",")
+		argsText = ""
+		comment = ""
+		for i in arr:
+			i = i.strip()
+			arr2 = i.split(" ")
+			if len(arr2) == 2:
+				argsText+="\r\n"
+				tm = ReadTemplate("produce_AddDic.cs")
+				argsText+=tm.replace("#name#", arr2[1])		
+				comment += "\r\n"
+				s = ReadTemplate("arg.cs")
+				comment += s.replace("#arg#", i)			
+		argsText+="\r\n"
+		text = ReadTemplate("produce_fun.cs")
+		return text.replace("#script#", self.script).replace("#name#", self.name).replace("#returns#", self.returns).\
+replace("#paramers#", self.paramers).replace("#operator#", self.operator).replace("#SQL_ID#", self.SQL_ID).\
+replace("#AddDic#", argsText).replace("#args#", comment)
 	def ArgComment(self):
 		text = ""
 		for i in self.args:
@@ -99,7 +120,7 @@ def read_val(val):
 		return str(int(val))
 	if isinstance(val, int):
 		return str(val)
-	return val.rstrip()
+	return val.strip()
 	
 interfaces = {}
 for sheet in book.sheets():
